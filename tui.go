@@ -1417,14 +1417,15 @@ func (m model) viewProfiel(w int) string {
 // ─── Header ───────────────────────────────────────────────────────────────────
 
 func (m model) header() string {
-	titel := somtodayLogoANSI
+	stijlNaam := lipgloss.NewStyle().Foreground(lipgloss.Color(kleurWit)).Bold(true).Padding(0, 1)
+	titel := stijlNaam.Render("SOMTODAY")
 	info := ""
 	if m.leerling != nil {
 		info = stijlHeaderInfo.Render(
 			fmt.Sprintf("  👤 %s %s", m.leerling.Roepnaam, m.leerling.Achternaam),
 		)
 	}
-	return lipgloss.JoinHorizontal(lipgloss.Top, titel, info)
+	return lipgloss.JoinHorizontal(lipgloss.Center, titel, info)
 }
 
 // ─── Hulpfuncties ─────────────────────────────────────────────────────────────
