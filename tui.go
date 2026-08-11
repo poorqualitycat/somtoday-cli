@@ -1417,7 +1417,7 @@ func (m model) viewProfiel(w int) string {
 // ─── Header ───────────────────────────────────────────────────────────────────
 
 func (m model) header() string {
-	titel := stijlHeader.Render(" ⚡ SOMTODAY ")
+	titel := somtodayLogoANSI
 	info := ""
 	if m.leerling != nil {
 		info = stijlHeaderInfo.Render(
