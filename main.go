@@ -442,7 +442,7 @@ func startBrowserLogin(schoolUUID string) (authURL string, verifier string, err 
 	q.Set("client_id", somtodayLeerlingClientID)
 	q.Set("state", state)
 	q.Set("response_type", "code")
-	q.Set("scope", "openid")
+	q.Set("scope", "openid offline_access")
 	q.Set("tenant_uuid", schoolUUID)
 	q.Set("code_challenge", challenge)
 	q.Set("code_challenge_method", "S256")
@@ -833,8 +833,9 @@ func main() {
 	exeName := filepath.Base(os.Args[0])
 	isTUI := strings.Contains(strings.ToLower(exeName), "tui") || (len(os.Args) == 1 && !strings.Contains(strings.ToLower(exeName), "cli"))
 
+	startIPCListener()
+
 	if isTUI {
-		startIPCListener()
 		for {
 			m := startTUI()
 			if !m.uitloggen {
