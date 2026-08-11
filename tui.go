@@ -17,15 +17,21 @@ import (
 const (
 	kleurPrimair    = "#E02475" // Somtoday Vivid Magenta
 	kleurSecundair  = "#0084FF" // Somtoday Electric Blue
-	kleurBasis      = "#22123B" // Somtoday Dark Purple
-	kleurGroen      = "#22C55E" // Voldoendes, afgevinkt
-	kleurRood       = "#EF4444" // Onvoldoendes, uitval
+	kleurBasis      = "#121214" // Main console background
+	kleurFiller     = "#252529" // Filler color
+	kleurTekst      = "#F5F5F7" // Text color
+	
+	kleurZeerVoldoende = "#34C759" // Zeer voldoende (7.5 - 10)
+	kleurVoldoende     = "#F5F5F7" // Voldoende (5.5 - 7.4)
+	kleurOnvoldoende   = "#FF3B30" // Onvoldoende (1.0 - 5.4)
+
+	kleurGroen      = "#34C759" // Afgevinkt
+	kleurRood       = "#FF3B30" // Uitval
 	kleurOranje     = "#F97316" // Te laat
 	kleurWit        = "#FFFFFF"
-	kleurLichtGrijs = "#F4F5F8" // Achtergrond
+	kleurLichtGrijs = "#F4F5F8" 
 	kleurGrijs      = "#94A3B8"
-	kleurZwart      = "#1E293B" // Tekstkleur dark slate
-	kleurTekst      = "#E0E0E0" // Voor donkere terminals
+	kleurZwart      = "#1E293B" 
 	kleurSubtiel    = "#64748B"
 )
 
@@ -182,8 +188,20 @@ var (
 		Foreground(lipgloss.Color(kleurGroen)).
 		Bold(true)
 
+	stijlCijferZeerVoldoende = lipgloss.NewStyle().
+		Foreground(lipgloss.Color(kleurZeerVoldoende)).
+		Bold(true)
+		
+	stijlCijferVoldoende = lipgloss.NewStyle().
+		Foreground(lipgloss.Color(kleurVoldoende)).
+		Bold(true)
+
+	stijlCijferOnvoldoende = lipgloss.NewStyle().
+		Foreground(lipgloss.Color(kleurOnvoldoende)).
+		Bold(true)
+
 	stijlOnvoldoende = lipgloss.NewStyle().
-		Foreground(lipgloss.Color(kleurRood)).
+		Foreground(lipgloss.Color(kleurOnvoldoende)).
 		Bold(true)
 
 	stijlVoet = lipgloss.NewStyle().
@@ -1200,9 +1218,11 @@ func (m model) viewCijfers(w int) string {
 				cijferStr = c.ResultaatLabel
 			}
 
-			cijferStijl := stijlSucces
+			cijferStijl := stijlCijferVoldoende
 			if c.Resultaat > 0 && c.Resultaat < 5.5 {
-				cijferStijl = stijlOnvoldoende
+				cijferStijl = stijlCijferOnvoldoende
+			} else if c.Resultaat >= 7.5 {
+				cijferStijl = stijlCijferZeerVoldoende
 			}
 
 			omschr := beknopt(c.Omschrijving, 25)
