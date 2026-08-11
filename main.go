@@ -352,6 +352,7 @@ func (s *Sessie) inloggen(schoolUUID, gebruikersnaam, wachtwoord string) error {
 	configSet(keySchoolUUID, s.SchoolUUID)
 	configSet(keyUsername, gebruikersnaam)
 	configSet(keyPassword, wachtwoord)
+	configSet("client_id", somtodayClientID)
 
 	return nil
 }
@@ -366,7 +367,13 @@ func (s *Sessie) tokenVernieuwen() error {
 	values := url.Values{}
 	values.Set("grant_type", "refresh_token")
 	values.Set("refresh_token", s.RefreshToken)
-	values.Set("client_id", somtodayClientID)
+	
+	// Haal client_id op uit de config (verschilt tussen SSO en wachtwoord)
+	clientID, _ := configGet("client_id")
+	if clientID == "" {
+		clientID = somtodayClientID // Fallback voor oude configs
+	}
+	values.Set("client_id", clientID)
 	values.Set("scope", "openid")
 
 	req, err := http.NewRequest("POST", somtodayTokenURL, strings.NewReader(values.Encode()))
@@ -578,6 +585,7 @@ func (s *Sessie) voltooiBrowserLogin(schoolUUID, verifier, callbackURL string) e
 	configSet(keyRefresh, s.RefreshToken)
 	configSet(keySchoolUUID, s.SchoolUUID)
 	configSet(keyBaseURL, s.BaseURL)
+	configSet("client_id", somtodayLeerlingClientID)
 	return nil
 }
 
