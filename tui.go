@@ -15,7 +15,7 @@ import (
 // ─── Kleuren (SomToday branding) ──────────────────────────────────────────────
 
 const (
-	kleurPrimair    = "#E02475" // Somtoday Vivid Magenta
+	kleurPrimair    = "#66B4FF" // Highlighted text / Active
 	kleurSecundair  = "#0084FF" // Somtoday Electric Blue
 	kleurBasis      = "#121214" // Main console background
 	kleurFiller     = "#252529" // Filler color
