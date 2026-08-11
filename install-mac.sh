@@ -11,7 +11,7 @@ fi
 
 # 2. Download de juiste macOS binary naar een tijdelijke map
 echo "Downloading somtoday-cli for macOS ($ARCH)..."
-curl -sL "$BINARY_URL" -o /tmp/somtoday-cli || {
+curl -sSfL "$BINARY_URL" -o /tmp/somtoday-cli || {
     echo "Release niet gevonden. Lokaal bouwen..."
     git clone https://github.com/poorqualitycat/somtoday-cli.git /tmp/somtoday-cli-src
     cd /tmp/somtoday-cli-src
