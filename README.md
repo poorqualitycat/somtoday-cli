@@ -7,11 +7,11 @@ Een moderne, razendsnelle Command Line Interface (CLI) en Terminal User Interfac
 
 ---
 
-## 🚀 Installatie
+## Installatie
 
 Installeer `somtoday-cli` en `somtoday-tui` direct via de terminal:
 
-### 🌐 1. Automatische Installers (Aanbevolen)
+###  1. Automatische Installers (Aanbevolen)
 
 #### Linux
 ```bash
@@ -30,7 +30,7 @@ irm https://raw.githubusercontent.com/poorqualitycat/somtoday-cli/refs/heads/mai
 
 ---
 
-### 🛠️ 2. Handmatig bouwen (Vanaf broncode)
+###  2. Handmatig bouwen (Vanaf broncode) [Linux Only]
 
 Als je Go geïnstalleerd hebt op je systeem:
 
@@ -49,17 +49,17 @@ sudo ln -sf /usr/local/bin/somtoday-cli /usr/local/bin/somtoday-tui
 
 ---
 
-## 💻 Gebruik
+##  Gebruik
 
 Het programma heeft twee standen: **TUI** (interactieve visuele modus) en **CLI** (snelle commando's in je terminal).
 
-### 🎨 1. Terminal User Interface (TUI)
+###  1. Terminal User Interface (TUI)
 Start de interactieve GUI in Somtoday merkkleuren:
 ```bash
 somtoday-tui
 ```
 
-### ⚡ 2. Command Line Interface (CLI)
+###  2. Command Line Interface (CLI)
 Voer snelle commando's uit zonder de TUI te openen:
 
 #### Inloggen
@@ -115,7 +115,7 @@ somtoday-cli help         # Toont het overzicht van alle commando's
 
 ---
 
-## 🔒 Beveiliging & Opslag
+##  Beveiliging & Opslag
 
 De applicatie maakt gebruik van een automatische `config.json` opslag in OS-specifieke mappen:
 - **Linux:** `~/.config/somtoday-cli/config.json`
@@ -125,17 +125,3 @@ De applicatie maakt gebruik van een automatische `config.json` opslag in OS-spec
 Zodra je via SSO of Wachtwoord inlogt, wordt er een **OAuth Refresh Token** opgeslagen. Hierdoor blijf je **altijd ingelogd**, zelfs als de CLI opnieuw opstart of je pc herstart wordt!
 
 ---
-
-## 📖 SOMtoday REST API Documentatie
-
-Hieronder vind je de originele documentatie van de Somtoday REST API.
-
-## Table of contents
-
-- [Authentication / authorization](Authentication.md)
-- [Homework](Homework.md)
-- [Fetching information](#fetching-information)
-  - [Current student(s): `GET /rest/v1/leerlingen`](#current-students-get-restv1leerlingen)
-  - [Grades: `GET /rest/v1/resultaten/huidigVoorLeerling/[id]`](#grades-get-restv1resultatenhuidigvoorleerlingid)
-  - [Schedule: `GET /rest/v1/afspraken`](#schedule-get-restv1afspraken)
-  - [Absence Reports: `GET /rest/v1/absentiemeldingen`](#absence-reports-get-restv1absentiemeldingen)
