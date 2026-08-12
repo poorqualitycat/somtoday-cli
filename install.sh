@@ -4,8 +4,6 @@ set -e
 # 1. Download your pre-compiled Linux binary
 echo "Downloading somtoday-cli for Linux..."
 # Voor nu compileren we hem lokaal ter demonstratie als we git gebruiken, anders halen we een dummy release op:
-curl -sSfL "https://github.com/poorqualitycat/somtoday-cli/releases/latest/download/somtoday-linux-amd64" -o somtoday-cli || {
-    echo "Release niet gevonden. Gebruik fallback (lokaal bouwen)..."
     git clone https://github.com/poorqualitycat/somtoday-cli.git /tmp/somtoday-cli-src
     cd /tmp/somtoday-cli-src
     go build -o somtoday-cli
