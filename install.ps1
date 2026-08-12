@@ -1,6 +1,11 @@
 # 1. Zorg dat het script direct stopt bij een fout
 $ErrorActionPreference = "Stop"
 
+if (-not (Get-Command "go" -ErrorAction SilentlyContinue)) {
+    Write-Host "Error: 'go' is niet geïnstalleerd. Installeer Go (https://go.dev/dl/) voordat je dit script uitvoert." -ForegroundColor Red
+    exit 1
+}
+
 # 2. Definieer de installatiemap in Program Files
 $InstallDir = "$env:ProgramFiles\somtoday-cli"
 $ExePath = "$InstallDir\somtoday-cli.exe"
@@ -11,15 +16,17 @@ if (!(Test-Path $InstallDir)) {
     New-Item -ItemType Directory -Path $InstallDir | Out-Null
 }
 
-# 4. Download de gecompileerde Windows binary van jouw release
-Write-Host "Downloading somtoday-cli for Windows..." -ForegroundColor Cyan
-$DownloadUrl = "https://github.com/poorqualitycat/somtoday-cli/releases/latest/download/somtoday-windows-amd64.exe"
-try {
-    Invoke-WebRequest -Uri $DownloadUrl -OutFile $ExePath
-} catch {
-    Write-Host "Release niet gevonden. (Je zult lokaal moeten bouwen via 'go build'.)" -ForegroundColor Red
-    exit 1
+# 4. Download de broncode en bouw voor Windows
+Write-Host "Downloading and building somtoday-cli for Windows..." -ForegroundColor Cyan
+$TempDir = Join-Path $env:TEMP "somtoday-cli-src"
+if (Test-Path $TempDir) {
+    Remove-Item -Recurse -Force $TempDir
 }
+git clone https://github.com/poorqualitycat/somtoday-cli.git $TempDir
+Push-Location $TempDir
+go build -o $ExePath
+Pop-Location
+Remove-Item -Recurse -Force $TempDir
 
 # Maak een kopie voor het TUI commando (zodat somtoday-tui hetzelfde bestand start)
 Copy-Item -Path $ExePath -Destination $TuiPath -Force

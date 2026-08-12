@@ -1,24 +1,18 @@
 #!/bin/sh
 set -e
 
-# 1. Bepaal de architectuur
-ARCH=$(uname -m)
-if [ "$ARCH" = "arm64" ]; then
-    BINARY_URL="https://github.com/poorqualitycat/somtoday-cli/releases/latest/download/somtoday-darwin-arm64"
-else
-    BINARY_URL="https://github.com/poorqualitycat/somtoday-cli/releases/latest/download/somtoday-darwin-amd64"
+if ! command -v go >/dev/null 2>&1; then
+    echo "Error: 'go' is niet geïnstalleerd. Installeer Go (bijv. via 'brew install go') voordat je dit script uitvoert."
+    exit 1
 fi
 
-# 2. Download de juiste macOS binary naar een tijdelijke map
-echo "Downloading somtoday-cli for macOS ($ARCH)..."
-curl -sSfL "$BINARY_URL" -o /tmp/somtoday-cli || {
-    echo "Release niet gevonden. Lokaal bouwen..."
-    git clone https://github.com/poorqualitycat/somtoday-cli.git /tmp/somtoday-cli-src
-    cd /tmp/somtoday-cli-src
-    go build -o /tmp/somtoday-cli
-    cd ..
-    rm -rf /tmp/somtoday-cli-src
-}
+# 1. Download source and build for macOS
+echo "Downloading and building somtoday-cli for macOS..."
+git clone https://github.com/poorqualitycat/somtoday-cli.git /tmp/somtoday-cli-src
+cd /tmp/somtoday-cli-src
+go build -o /tmp/somtoday-cli
+cd ..
+rm -rf /tmp/somtoday-cli-src
 
 # 3. Maak het bestand uitvoerbaar
 chmod +x /tmp/somtoday-cli
